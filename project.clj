@@ -1,8 +1,8 @@
 (defproject maqueta "0.1.0-SNAPSHOT"
   :description "FIXME: write description"
   :url "https://github.com/marcovzla/maqueta"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :license {:name "MIT License"
+            :url "https://raw.github.com/marcovzla/maqueta/master/LICENSE"}
   :dependencies [[org.clojure/clojure "1.4.0"]
                  ;; jMonkeyEngine 3.0
                  [local/eventbus "3.0"]

@@ -8,6 +8,6 @@ FIXME
 
 ## License
 
-Copyright © 2012 FIXME
+Copyright © 2012 Marco Antonio Valenzuela Escárcega
 
-Distributed under the Eclipse Public License, the same as Clojure.
+Distributed under the MIT License. See LICENSE for details.
