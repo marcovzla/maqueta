@@ -47,3 +47,8 @@ unzip $FILE -d "$DL/jme3"
 for jar in $DL/jme3/lib/*.jar; do
     mvn-deploy $jar 3.0
 done
+
+
+
+# build jar
+lein uberjar

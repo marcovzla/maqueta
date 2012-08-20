@@ -31,4 +31,5 @@
                  [local/stack-alloc "3.0"]
                  [local/vecmath "3.0"]
                  [local/xmlpull-xpp3 "3.0"]]
-  :repositories {"project" "file:maven-repo"})
+  :repositories {"project" "file:maven-repo"}
+  :main maqueta.core)

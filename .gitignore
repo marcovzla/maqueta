@@ -11,3 +11,4 @@ pom.xml
 
 downloads
 maven-repo
+*.so
