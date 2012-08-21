@@ -17,8 +17,7 @@
            (simpleInitApp []
              (let [teapot (load-model "Models/Teapot/Teapot.obj")
                    mat-default (load-material "Common/MatDefs/Misc/ShowNormals.j3md")
-                   box (Box. Vector3f/ZERO 2.5 2.5 1.0)
-                   wall (Geometry. "Box" box)
+                   wall (Geometry. "Box" (Box. Vector3f/ZERO 2.5 2.5 1.0))
                    mat-brick (load-material "Common/MatDefs/Misc/Unshaded.j3md")
                    gui-font (load-font "Interface/Fonts/Default.fnt")
                    hello-text (BitmapText. gui-font false)
@@ -26,27 +25,35 @@
                    sun (DirectionalLight.)]
 
                (.setMaterial teapot mat-default)
-               (.attachChild (.getRootNode this) teapot)
 
                (.setTexture mat-brick "ColorMap"
                             (load-texture "Textures/Terrain/BrickWall/BrickWall.jpg"))
-               (.setMaterial wall mat-brick)
-               (.setLocalTranslation wall 2.0 -2.5 0.0)
-               (.attachChild (.getRootNode this) wall)
 
-               (.detachAllChildren (.getGuiNode this))
-               (.setSize hello-text (.getRenderedSize (.getCharSet gui-font)))
-               (.setText hello-text "Hello World")
-               (.setLocalTranslation hello-text 300 (.getLineHeight hello-text) 0)
-               (.attachChild (.getGuiNode this) hello-text)
+               (doto wall
+                 (.setMaterial mat-brick)
+                 (.setLocalTranslation 2.0 -2.5 0.0))
 
-               (.scale ninja 0.05 0.05 0.05)
-               (.rotate ninja 0.0 -3.0 0.0)
-               (.setLocalTranslation ninja 0.0 -5.0 -2.0)
-               (.attachChild (.getRootNode this) ninja)
+               (doto hello-text
+                 (.setSize (.getRenderedSize (.getCharSet gui-font)))
+                 (.setText "Hello World")
+                 (.setLocalTranslation 300 (.getLineHeight hello-text) 0))
+
+               (doto (.getGuiNode this)
+                 .detachAllChildren
+                 (.attachChild hello-text))
+
+               (doto ninja
+                 (.scale 0.05 0.05 0.05)
+                 (.rotate 0.0 -3.0 0.0)
+                 (.setLocalTranslation 0.0 -5.0 -2.0))
 
                (.setDirection sun (Vector3f. -0.1 -0.7 -1.0))
-               (.addLight (.getRootNode this) sun)))))
+
+               (doto (.getRootNode this)
+                 (.attachChild teapot)
+                 (.attachChild wall)
+                 (.attachChild ninja)
+                 (.addLight sun))))))
 
 (defn -main [& args]
   (doto app
