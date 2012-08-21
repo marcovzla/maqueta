@@ -1,12 +1,17 @@
 (ns maqueta.core
+  (:use maqueta.assets)
   (:import (com.jme3.app SimpleApplication)
+           (com.jme3.system AppSettings)
            (com.jme3.font BitmapText)
            (com.jme3.light DirectionalLight)
            (com.jme3.math Vector3f)
            (com.jme3.scene Geometry)
            (com.jme3.scene.shape Box))
-  (:use maqueta.assets)
   (:gen-class))
+
+(def ^:dynamic *app-settings* (doto (AppSettings. true)
+                                (.setFullscreen false)
+                                (.setTitle "maqueta")))
 
 (def app (proxy [SimpleApplication] []
            (simpleInitApp []
@@ -44,4 +49,7 @@
                (.addLight (.getRootNode this) sun)))))
 
 (defn -main [& args]
-  (.start app))
+  (doto app
+    (.setShowSettings false)
+    (.setSettings *app-settings*)
+    (.start)))
