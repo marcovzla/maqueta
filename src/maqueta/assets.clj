@@ -1,6 +1,5 @@
 (ns maqueta.assets
-  (:import (com.jme3.system AppSettings)
-           (com.jme3.system JmeSystem)
+  (:import (com.jme3.system JmeSystem)
            (com.jme3.material Material)))
 
 (def desktop-cfg (-> (Thread/currentThread)
