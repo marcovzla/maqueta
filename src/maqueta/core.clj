@@ -16,4 +16,6 @@
 (defn -main [& args]
   (.start (make-app player
                     no-op
-                    #(.rotate player 0 (* 2 %2) 0))))
+                    no-op
+                    {:key-h (fn [n p t]
+                              (.rotate player 0 1 0))})))
