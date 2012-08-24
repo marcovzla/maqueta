@@ -3,8 +3,8 @@
            (com.jme3.material Material)))
 
 (def desktop-cfg (-> (Thread/currentThread)
-                   .getContextClassLoader
-                   (.getResource "com/jme3/asset/Desktop.cfg")))
+                     .getContextClassLoader
+                     (.getResource "com/jme3/asset/Desktop.cfg")))
 
 (def asset-manager (JmeSystem/newAssetManager desktop-cfg))
 
