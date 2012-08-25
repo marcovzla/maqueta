@@ -58,30 +58,41 @@
           nil)))))
 
 (defn initialize-inputs
-  [app input-manager key-map]
+  [input-manager listener key-map]
   (doall
    (map (fn [keyword]
           (let [name (keyword->name keyword)
                 trigger (get-trigger keyword)]
-            (.addMapping input-manager name (into-array Trigger [trigger]))
-            (.addListener input-manager app (into-array String [name]))))
+            (.addMapping input-manager name
+                         (into-array Trigger [trigger]))
+            (.addListener input-manager listener
+                          (into-array String [name]))))
         (keys key-map))))
 
 (defn make-app
-  [root-node setup-fn update-fn key-map]
+  [root-node setup-fn update-fn action-key-map analog-key-map]
   (doto
-      (proxy [SimpleApplication ActionListener] []
+      (proxy [SimpleApplication ActionListener AnalogListener] []
         (simpleInitApp []
-          (initialize-inputs this (.getInputManager this) key-map)
+          (initialize-inputs (.getInputManager this)
+                             (cast ActionListener this) 
+                             action-key-map)
+          (initialize-inputs (.getInputManager this)
+                             (cast AnalogListener this)
+                             analog-key-map)
           ;; attach root-node to application
           (.attachChild (.getRootNode this) root-node)
           (setup-fn this))
         (simpleUpdate [tpf]
           (update-fn this tpf))
         (onAction
-          [action-name is-pressed tpf]
-          (if-let [react (key-map (name->keyword action-name))]
-            (react this is-pressed tpf))))
+          [name is-pressed tpf]
+          (if-let [callback (action-key-map (name->keyword name))]
+            (callback this is-pressed tpf)))
+        (onAnalog
+          [name value tpf]
+          (if-let [callback (analog-key-map (name->keyword name))]
+            (callback this value tpf))))
     ;; don't show settings dialog
     (.setShowSettings false)
     (.setSettings *app-settings*)))

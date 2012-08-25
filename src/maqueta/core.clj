@@ -17,4 +17,5 @@
   (.start (make-app player
                     no-op
                     no-op
-                    {:key-h (fn [n p t] (.rotate player 0 1 0))})))
+                    {:key-h (fn [n p t] (.rotate player 0 1 0))}
+                    {:key-j (fn [n v t] (.rotate player 0 v 0))})))
