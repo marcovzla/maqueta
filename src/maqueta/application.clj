@@ -6,7 +6,11 @@
                                     KeyTrigger
                                     MouseButtonTrigger
                                     ActionListener
-                                    AnalogListener)))
+                                    AnalogListener)
+           (com.jme3.animation AnimChannel
+                               AnimControl
+                               AnimEventListener
+                               LoopMode)))
 
 (def ^:dynamic *app-settings* (doto (AppSettings. true)
                                 (.setFullscreen false)
@@ -63,23 +67,21 @@
    (map (fn [keyword]
           (let [name (keyword->name keyword)
                 trigger (get-trigger keyword)]
-            (.addMapping input-manager name
-                         (into-array Trigger [trigger]))
-            (.addListener input-manager listener
-                          (into-array String [name]))))
+            (doto input-manager
+              (.addMapping name (into-array Trigger [trigger]))
+              (.addListener listener (into-array String [name])))))
         (keys key-map))))
 
 (defn make-app
   [root-node setup-fn update-fn action-key-map analog-key-map]
   (doto
-      (proxy [SimpleApplication ActionListener AnalogListener] []
+      (proxy [SimpleApplication
+              ActionListener AnalogListener
+              AnimEventListener] []
         (simpleInitApp []
-          (initialize-inputs (.getInputManager this)
-                             (cast ActionListener this) 
-                             action-key-map)
-          (initialize-inputs (.getInputManager this)
-                             (cast AnalogListener this)
-                             analog-key-map)
+          (doto (.getInputManager this)
+            (initialize-inputs (cast ActionListener this) action-key-map)
+            (initialize-inputs (cast AnalogListener this) analog-key-map))
           ;; attach root-node to application
           (.attachChild (.getRootNode this) root-node)
           (setup-fn this))
@@ -92,7 +94,11 @@
         (onAnalog
           [name value tpf]
           (if-let [callback (analog-key-map (name->keyword name))]
-            (callback this value tpf))))
+            (callback this value tpf)))
+        (onAnimChange
+          [control channel anim-name])
+        (onAnimCycleDone
+          [control channel anim-name]))
     ;; don't show settings dialog
     (.setShowSettings false)
     (.setSettings *app-settings*)))
