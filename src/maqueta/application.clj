@@ -1,4 +1,5 @@
 (ns maqueta.application
+  (:use maqueta.util)
   (:import com.jme3.app.SimpleApplication
            com.jme3.system.AppSettings
            (com.jme3.input KeyInput MouseInput)
@@ -15,24 +16,6 @@
 (def ^:dynamic *app-settings* (doto (AppSettings. true)
                                 (.setFullscreen false)
                                 (.setTitle "maqueta")))
-
-(defn no-op
-  "Takes any number of arguments and does nothing."
-  [& _])
-
-(defmacro name->keyword
-  [name]
-  `(keyword
-    (-> ~name
-        .toLowerCase
-        (.replaceAll "_" "-"))))
-
-(defmacro keyword->name
-  "Converts keywords like :key-j into \"KEY_J\"."
-  [keyword]
-  `(-> (name ~keyword)
-       .toUpperCase
-       (.replaceAll "-" "_")))
 
 (defmacro make-trigger
   [keyword input-class trigger-class]
