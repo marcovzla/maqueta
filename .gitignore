@@ -10,6 +10,6 @@ pom.xml
 .lein-plugins
 
 downloads
-maven-repo
+local-repo
 *.so
 *.jnilib

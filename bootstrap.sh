@@ -1,26 +1,23 @@
 #!/bin/bash
 
 
-
 # downloads directory
 DL='downloads'
 
 # local maven repository
-REPO='maven-repo'
-
+REPO='local-repo'
 
 
 # create directories if needed and get absolute paths
 [ -d $DL ] || mkdir $DL
 cd $DL
 DL=`pwd`
-cd - &> /dev/null
+cd - > /dev/null
 
 [ -d $REPO ] || mkdir $REPO
 cd $REPO
 REPO=`pwd`
-cd - &> /dev/null
-
+cd - > /dev/null
 
 
 # download file from given url
@@ -32,13 +29,12 @@ function get-file {
 # install jar in local repo
 function mvn-deploy {
     mvn deploy:deploy-file -Dfile=$1 \
-                           -DgroupId=local \
+                           -DgroupId=$(basename $REPO) \
                            -DartifactId=$(basename $1 .jar) \
                            -Dversion=$2 \
                            -Dpackaging=jar \
                            -Durl=file:$REPO
 }
-
 
 
 # jMonkeyEngine 3.0
@@ -47,7 +43,6 @@ unzip $FILE -d "$DL/jme3"
 for jar in $DL/jme3/lib/*.jar; do
     mvn-deploy $jar 3.0
 done
-
 
 
 # build jar
