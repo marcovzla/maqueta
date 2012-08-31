@@ -73,7 +73,11 @@
         (keys key-map))))
 
 (defn make-app
-  [root-node setup-fn update-fn action-key-map analog-key-map]
+  [& {:keys [root-node setup-fn update-fn action-key-map analog-key-map]
+      :or {setup-fn no-op
+           update-fn no-op
+           action-key-map {}
+           analog-key-map {}}}]
   (doto
       (proxy [SimpleApplication
               ActionListener AnalogListener

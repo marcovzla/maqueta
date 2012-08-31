@@ -10,6 +10,10 @@
 
 (def player (load-model "Models/Oto/Oto.mesh.xml"))
 
+(def action-key-map {:key-h (fn [n p t] (.rotate player 0 1 0))})
+
+(def analog-key-map {:key-j (fn [n v t] (.rotate player 0 v 0))})
+
 (defn setup-fn
   [app]
   (let [root-node (.getRootNode app)
@@ -20,8 +24,7 @@
     (.setLocalScale player (Vector3f. 0.5 0.5 0.5))))
 
 (defn -main [& args]
-  (.start (make-app player
-                    setup-fn
-                    no-op
-                    {:key-h (fn [n p t] (.rotate player 0 1 0))}
-                    {:key-j (fn [n v t] (.rotate player 0 v 0))})))
+  (.start (make-app :root-node player
+                    :setup-fn setup-fn
+                    :action-key-map action-key-map
+                    :analog-key-map analog-key-map)))
