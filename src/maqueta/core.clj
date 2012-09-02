@@ -40,12 +40,12 @@
     (.setBackgroundColor viewport ColorRGBA/LightGray)
     (.setDirection light (.normalizeLocal (Vector3f. -0.1 -1 -1)))
     (.addLight root-node light)
+    (.attachChild root-node player)
     (.setLocalScale player (Vector3f. 0.5 0.5 0.5))
     (.addListener control app)
     (.setAnim channel "stand")))
 
 (defn -main [& args]
-  (.start (make-app :root-node player
-                    :setup-fn setup-fn
+  (.start (make-app :setup-fn setup-fn
                     :on-anim-cycle-done on-anim-cycle-done
                     :on-action on-action)))

@@ -58,7 +58,8 @@
 (defn make-app
   [& {:keys [root-node setup-fn update-fn show-settings
              on-action on-analog on-anim-cycle-done]
-      :or {setup-fn no-op
+      :or {root-node nil
+           setup-fn no-op
            update-fn no-op
            show-settings false
            on-action {}
@@ -69,11 +70,11 @@
               ActionListener AnalogListener
               AnimEventListener] []
         (simpleInitApp []
+          (if root-node
+            (.attachChild (.getRootNode this) root-node))
           (doto (.getInputManager this)
             (initialize-inputs (cast ActionListener this) on-action)
             (initialize-inputs (cast AnalogListener this) on-analog))
-          ;; attach root-node to application
-          (.attachChild (.getRootNode this) root-node)
           (setup-fn this))
         (simpleUpdate [tpf]
           (update-fn this tpf))
