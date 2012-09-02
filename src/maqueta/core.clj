@@ -22,15 +22,16 @@
       (.setAnim "Walk" 0.5)
       (.setLoopMode LoopMode/Loop))))
 
-(defn cycle-done
-  [control channel name]
-  (if (.equals name "Walk")
-    (doto channel
-      (.setAnim "stand" 0.5)
-      (.setLoopMode LoopMode/DontLoop)
-      (.setSpeed 1))))
+(def on-action {:key-space walk})
 
-(def action-key-map {:key-space walk})
+(defn cycle-done
+  [app control channel]
+  (doto channel
+    (.setAnim "stand" 0.5)
+    (.setLoopMode LoopMode/DontLoop)
+    (.setSpeed 1)))
+
+(def on-anim-cycle-done {"Walk" cycle-done})
 
 (defn setup-fn
   [app]
@@ -46,5 +47,5 @@
 (defn -main [& args]
   (.start (make-app :root-node player
                     :setup-fn setup-fn
-                    :anim-cycle-done cycle-done
-                    :on-action action-key-map)))
+                    :on-anim-cycle-done on-anim-cycle-done
+                    :on-action on-action)))

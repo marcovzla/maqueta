@@ -57,13 +57,12 @@
 
 (defn make-app
   [& {:keys [root-node setup-fn update-fn
-             on-action on-analog
-             anim-cycle-done]
+             on-action on-analog on-anim-cycle-done]
       :or {setup-fn no-op
            update-fn no-op
            on-action {}
            on-analog {}
-           anim-cycle-done no-op}}]
+           on-anim-cycle-done {}}}]
   (doto
       (proxy [SimpleApplication
               ActionListener AnalogListener
@@ -86,10 +85,11 @@
           (if-let [callback (on-analog (name->keyword name))]
             (callback this value tpf)))
         (onAnimChange
-          [control channel anim-name])
+          [control channel name])
         (onAnimCycleDone
-          [control channel anim-name]
-          (anim-cycle-done control channel anim-name)))
+          [control channel name]
+          (if-let [callback (on-anim-cycle-done name)]
+            (callback this control channel))))
     ;; don't show settings dialog
     (.setShowSettings false)
     (.setSettings *app-settings*)))
