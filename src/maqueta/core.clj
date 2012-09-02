@@ -46,4 +46,5 @@
 (defn -main [& args]
   (.start (make-app :root-node player
                     :setup-fn setup-fn
-                    :action-key-map action-key-map)))
+                    :anim-cycle-done cycle-done
+                    :on-action action-key-map)))

@@ -56,19 +56,22 @@
         (keys key-map))))
 
 (defn make-app
-  [& {:keys [root-node setup-fn update-fn action-key-map analog-key-map]
+  [& {:keys [root-node setup-fn update-fn
+             on-action on-analog
+             anim-cycle-done]
       :or {setup-fn no-op
            update-fn no-op
-           action-key-map {}
-           analog-key-map {}}}]
+           on-action {}
+           on-analog {}
+           anim-cycle-done no-op}}]
   (doto
       (proxy [SimpleApplication
               ActionListener AnalogListener
               AnimEventListener] []
         (simpleInitApp []
           (doto (.getInputManager this)
-            (initialize-inputs (cast ActionListener this) action-key-map)
-            (initialize-inputs (cast AnalogListener this) analog-key-map))
+            (initialize-inputs (cast ActionListener this) on-action)
+            (initialize-inputs (cast AnalogListener this) on-analog))
           ;; attach root-node to application
           (.attachChild (.getRootNode this) root-node)
           (setup-fn this))
@@ -76,16 +79,17 @@
           (update-fn this tpf))
         (onAction
           [name is-pressed tpf]
-          (if-let [callback (action-key-map (name->keyword name))]
+          (if-let [callback (on-action (name->keyword name))]
             (callback this is-pressed tpf)))
         (onAnalog
           [name value tpf]
-          (if-let [callback (analog-key-map (name->keyword name))]
+          (if-let [callback (on-analog (name->keyword name))]
             (callback this value tpf)))
         (onAnimChange
           [control channel anim-name])
         (onAnimCycleDone
-          [control channel anim-name]))
+          [control channel anim-name]
+          (anim-cycle-done control channel anim-name)))
     ;; don't show settings dialog
     (.setShowSettings false)
     (.setSettings *app-settings*)))
