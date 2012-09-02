@@ -56,10 +56,11 @@
         (keys key-map))))
 
 (defn make-app
-  [& {:keys [root-node setup-fn update-fn
+  [& {:keys [root-node setup-fn update-fn show-settings
              on-action on-analog on-anim-cycle-done]
       :or {setup-fn no-op
            update-fn no-op
+           show-settings false
            on-action {}
            on-analog {}
            on-anim-cycle-done {}}}]
@@ -91,5 +92,5 @@
           (if-let [callback (on-anim-cycle-done name)]
             (callback this control channel))))
     ;; don't show settings dialog
-    (.setShowSettings false)
+    (.setShowSettings show-settings)
     (.setSettings *app-settings*)))
