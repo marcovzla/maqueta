@@ -16,7 +16,7 @@
 (def channel (.createChannel control))
 
 (defn walk
-  [name is-pressed tpf]
+  [app is-pressed tpf]
   (if (not is-pressed)
     (doto channel
       (.setAnim "Walk" 0.5)
