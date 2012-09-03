@@ -56,14 +56,15 @@
         (keys key-map))))
 
 (defn make-app
-  [& {:keys [root-node setup-fn update-fn show-settings
-             on-action on-analog on-anim-cycle-done]
-      :or {root-node nil
+  [& {:keys [show-settings root-node setup-fn update-fn
+             on-action on-analog on-anim-change on-anim-cycle-done]
+      :or {show-settings false
+           root-node nil
            setup-fn no-op
            update-fn no-op
-           show-settings false
            on-action {}
            on-analog {}
+           on-anim-change {}
            on-anim-cycle-done {}}}]
   (doto
       (proxy [SimpleApplication
@@ -87,7 +88,9 @@
           (if-let [callback (on-analog (name->keyword name))]
             (callback this value tpf)))
         (onAnimChange
-          [control channel name])
+          [control channel name]
+          (if-let [callback (on-anim-change name)]
+            (callback this control channel)))
         (onAnimCycleDone
           [control channel name]
           (if-let [callback (on-anim-cycle-done name)]
