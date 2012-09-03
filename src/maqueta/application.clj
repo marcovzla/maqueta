@@ -92,6 +92,5 @@
           [control channel name]
           (if-let [callback (on-anim-cycle-done name)]
             (callback this control channel))))
-    ;; don't show settings dialog
     (.setShowSettings show-settings)
     (.setSettings *app-settings*)))
