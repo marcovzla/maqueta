@@ -2,8 +2,7 @@
   (:use (maqueta application assets))
   (:import com.jme3.scene.Geometry
            com.jme3.scene.shape.Box
-           (com.jme3.math ColorRGBA Vector3f))
-  (:gen-class))
+           (com.jme3.math ColorRGBA Vector3f)))
 
 (def geom (let [b (Box. Vector3f/ZERO 1 1 1)
                 geom (Geometry. "Box" b)
