@@ -1,0 +1,47 @@
+(ns maqueta.hello.input-system
+  (:use (maqueta application assets))
+  (:import (com.jme3.math ColorRGBA Vector3f)
+           com.jme3.scene.Geometry
+           com.jme3.scene.shape.Box))
+
+(def player (let [b (Box. Vector3f/ZERO 1 1 1)
+                  geo (Geometry. "Player" b)
+                  mat (load-material "Common/MatDefs/Misc/Unshaded.j3md")]
+              (.setColor mat "Color" ColorRGBA/Blue)
+              (.setMaterial geo mat)
+              geo))
+
+(def is-running (atom true))
+
+(defn toggle-pause
+  [app key-pressed tpf]
+  (if (not key-pressed)
+    (reset! is-running (not @is-running))))
+
+(defn rotate
+  [app value tpf]
+  (if @is-running
+    (.rotate player 0 value 0)
+    (println "Press P to unpause")))
+
+(defn right
+  [app value tpf]
+  (if @is-running
+    (let [v (.getLocalTranslation player)]
+      (.setLocalTranslation player (+ (.getX v) value) (.getY v) (.getZ v)))
+    (println "Press P to unpause")))
+
+(defn left
+  [app value tpf]
+  (if @is-running
+    (let [v (.getLocalTranslation player)]
+      (.setLocalTranslation player (- (.getX v) value) (.getY v) (.getZ v)))
+    (println "Press P to unpause")))
+
+(defn -main
+  []
+  (.start (make-app :root-node player
+                    :on-action {:key-p toggle-pause}
+                    :on-analog {:key-j left
+                                :key-k right
+                                :key-space rotate})))
