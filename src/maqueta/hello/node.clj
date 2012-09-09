@@ -1,4 +1,4 @@
-(ns maqueta.tutorials.node
+(ns maqueta.hello.node
   (:use (maqueta application assets))
   (:import com.jme3.scene.shape.Box
            (com.jme3.scene Geometry Node)
