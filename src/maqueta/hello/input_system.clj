@@ -4,6 +4,13 @@
            com.jme3.scene.Geometry
            com.jme3.scene.shape.Box))
 
+(defn get-speed
+  [app]
+  (-> com.jme3.app.Application
+      (.getDeclaredField "speed")
+      (doto (.setAccessible true))
+      (.get app)))
+
 (def player (let [b (Box. Vector3f/ZERO 1 1 1)
                   geo (Geometry. "Player" b)
                   mat (load-material "Common/MatDefs/Misc/Unshaded.j3md")]
@@ -21,21 +28,27 @@
 (defn rotate
   [app value tpf]
   (if @is-running
-    (.rotate player 0 value 0)
+    (.rotate player 0 (* value (get-speed app)) 0)
     (println "Press P to unpause")))
 
 (defn right
   [app value tpf]
   (if @is-running
     (let [v (.getLocalTranslation player)]
-      (.setLocalTranslation player (+ (.getX v) value) (.getY v) (.getZ v)))
+      (.setLocalTranslation player
+                            (+ (.getX v) (* value (get-speed app)))
+                            (.getY v)
+                            (.getZ v)))
     (println "Press P to unpause")))
 
 (defn left
   [app value tpf]
   (if @is-running
     (let [v (.getLocalTranslation player)]
-      (.setLocalTranslation player (- (.getX v) value) (.getY v) (.getZ v)))
+      (.setLocalTranslation player
+                            (- (.getX v) (* value (get-speed app)))
+                            (.getY v)
+                            (.getZ v)))
     (println "Press P to unpause")))
 
 (defn -main
