@@ -1,4 +1,4 @@
-(ns maqueta.hello.assets
+(ns maqueta.hello.asset
   (:use (maqueta application assets))
   (:import com.jme3.light.DirectionalLight
            com.jme3.font.BitmapText
