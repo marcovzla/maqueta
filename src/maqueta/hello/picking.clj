@@ -90,6 +90,7 @@
     (init-cross-hairs gui-node)
     (.attachChild root-node shootables)))
 
-(defn -main [& args]
+(defn -main
+  [& args]
   (.start (make-app :setup-fn setup-fn
                     :on-action on-action)))

@@ -27,5 +27,5 @@
                     (.rotate 0.4 0.4 0)))))
 
 (defn -main
-  []
+  [& args]
   (.start (make-app :setup-fn setup-fn)))

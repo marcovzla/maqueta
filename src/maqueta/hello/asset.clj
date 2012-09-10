@@ -52,5 +52,5 @@
       (.addLight sun))))
 
 (defn -main
-  []
+  [& args]
   (.start (make-app :setup-fn setup-fn)))

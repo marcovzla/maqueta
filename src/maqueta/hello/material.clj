@@ -78,5 +78,5 @@
         
 
 (defn -main
-  []
+  [& args]
   (.start (make-app :setup-fn init-app)))

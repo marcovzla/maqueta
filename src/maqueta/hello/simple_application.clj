@@ -15,5 +15,5 @@
             geom))
 
 (defn -main
-  []
+  [& args]
   (.start (make-app :root-node geom)))

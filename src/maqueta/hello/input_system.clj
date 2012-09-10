@@ -55,7 +55,7 @@
     (println "Press P to unpause")))
 
 (defn -main
-  []
+  [& args]
   (.start (make-app :root-node player
                     :on-action {:key-p toggle-pause}
                     :on-analog {:key-j left
