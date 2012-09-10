@@ -3,7 +3,7 @@
 
 # create directory if needed and print absolute path
 function make-dir {
-    [ -d $1 ] || mkdir $1
+    [ -d $1 ] || mkdir -p $1
     cd $1
     pwd
     cd - > /dev/null
@@ -17,12 +17,13 @@ function get-file {
 
 # install jar in local repo
 function mvn-deploy {
-    mvn deploy:deploy-file -Dfile=$1 \
-                           -DgroupId=$(basename $REPO) \
-                           -DartifactId=$(basename $1 .jar) \
-                           -Dversion=$2 \
-                           -Dpackaging=jar \
-                           -Durl=file:$REPO
+    mvn deploy:deploy-file \
+        -Dfile=$1 \
+        -DgroupId=$(basename $REPO) \
+        -DartifactId=$(basename $1 .jar) \
+        -Dversion=$2 \
+        -Dpackaging=jar \
+        -Durl=file:$REPO
 }
 
 
