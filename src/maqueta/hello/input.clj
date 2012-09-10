@@ -1,7 +1,7 @@
 ;;;; jMonkeyEngine 3 Tutorial (5) - Hello Input System
 ;;;; http://jmonkeyengine.org/wiki/doku.php/jme3:beginner:hello_input_system
 
-(ns maqueta.hello.input-system
+(ns maqueta.hello.input
   (:use (maqueta application assets))
   (:import (com.jme3.math ColorRGBA Vector3f)
            com.jme3.scene.Geometry

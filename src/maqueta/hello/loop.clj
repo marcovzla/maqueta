@@ -1,7 +1,7 @@
 ;;;; jMonkeyEngine 3 Tutorial (4) - Hello Update Loop
 ;;;; http://jmonkeyengine.org/wiki/doku.php/jme3:beginner:hello_main_event_loop
 
-(ns maqueta.hello.update-loop
+(ns maqueta.hello.loop
   (:use (maqueta application assets))
   (:import (com.jme3.math ColorRGBA Vector3f)
            com.jme3.scene.Geometry
