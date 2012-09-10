@@ -11,10 +11,10 @@
   (let [fire (ParticleEmitter. "Emitter"
                                com.jme3.effect.ParticleMesh$Type/Triangle
                                30)
-        mat-red (load-material "Common/MatDefs/Misc/Particle.j3md")
         debris (ParticleEmitter. "Debris"
                                  com.jme3.effect.ParticleMesh$Type/Triangle
                                  10)
+        mat-red (load-material "Common/MatDefs/Misc/Particle.j3md")
         debris-mat (load-material "Common/MatDefs/Misc/Particle.j3md")]
     (.setTexture mat-red "Texture"
                  (load-texture "Effects/Explosion/flame.png"))
@@ -31,12 +31,9 @@
       (.setGravity 0 0 0)
       (.setLowLife 1)
       (.setHighLife 3))
-    (-> fire
-        .getParticleInfluencer
-        (.setInitialVelocity (Vector3f. 0 2 0)))
-    (-> fire
-        .getParticleInfluencer
-        (.setVelocityVariation 0.3))
+    (doto (.getParticleInfluencer fire)
+      (.setInitialVelocity (Vector3f. 0 2 0))
+      (.setVelocityVariation 0.3))
     (doto debris
       (.setMaterial debris-mat)
       (.setImagesX 3)
@@ -45,12 +42,9 @@
       (.setSelectRandomImage true)
       (.setStartColor ColorRGBA/White)
       (.setGravity 0 6 0))
-    (-> debris
-        .getParticleInfluencer
-        (.setInitialVelocity (Vector3f. 0 4 0)))
-    (-> debris
-        .getParticleInfluencer
-        (.setVelocityVariation 0.6))
+    (doto (.getParticleInfluencer debris)
+      (.setInitialVelocity (Vector3f. 0 4 0))
+      (.setVelocityVariation 0.6))
     (doto (.getRootNode app)
       (.attachChild fire)
       (.attachChild debris))
