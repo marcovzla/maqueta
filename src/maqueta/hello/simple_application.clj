@@ -1,3 +1,6 @@
+;;;; jMonkeyEngine 3 Tutorial (1) - Hello SimpleApplication
+;;;; http://jmonkeyengine.org/wiki/doku.php/jme3:beginner:hello_simpleapplication
+
 (ns maqueta.hello.simple-application
   (:use (maqueta application assets))
   (:import com.jme3.scene.Geometry

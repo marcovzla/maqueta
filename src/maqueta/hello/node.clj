@@ -1,3 +1,6 @@
+;;;; jMonkeyEngine 3 Tutorial (2) - Hello Node
+;;;; http://jmonkeyengine.org/wiki/doku.php/jme3:beginner:hello_node
+
 (ns maqueta.hello.node
   (:use (maqueta application assets))
   (:import com.jme3.scene.shape.Box

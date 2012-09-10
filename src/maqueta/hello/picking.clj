@@ -1,3 +1,6 @@
+;;;; jMonkeyEngine 3 Tutorial (8) - Hello Picking
+;;;; http://jmonkeyengine.org/wiki/doku.php/jme3:beginner:hello_picking
+
 (ns maqueta.hello.picking
   (:use (maqueta application assets))
   (:import com.jme3.collision.CollisionResults

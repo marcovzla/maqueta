@@ -1,3 +1,6 @@
+;;;; jMonkeyEngine 3 Tutorial (6) - Hello Materials
+;;;; http://jmonkeyengine.org/wiki/doku.php/jme3:beginner:hello_material
+
 (ns maqueta.hello.material
   (:use (maqueta application assets))
   (:import com.jme3.light.DirectionalLight

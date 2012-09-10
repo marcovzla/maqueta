@@ -1,3 +1,6 @@
+;;;; jMonkeyEngine 3 Tutorial (7) - Hello Animation
+;;;; http://jmonkeyengine.org/wiki/doku.php/jme3:beginner:hello_animation
+
 (ns maqueta.hello.animation
   (:use (maqueta application assets))
   (:import com.jme3.math.ColorRGBA
