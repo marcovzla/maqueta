@@ -1,7 +1,7 @@
 ;;;; jMonkeyEngine 3 Tutorial (3) - Hello Assets
 ;;;; http://jmonkeyengine.org/wiki/doku.php/jme3:beginner:hello_asset
 
-(ns maqueta.hello.asset
+(ns maqueta.hello.assets
   (:use (maqueta application assets))
   (:import com.jme3.light.DirectionalLight
            com.jme3.font.BitmapText
