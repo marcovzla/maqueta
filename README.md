@@ -14,7 +14,7 @@ A Clojure library designed to ... well, that part is up to you.
     lein run -m maqueta.hello.picking
     #lein run -m maqueta.hello.collision
     #lein run -m maqueta.hello.terrain
-    #lein run -m maqueta.hello.audio
+    lein run -m maqueta.hello.audio
     lein run -m maqueta.hello.effects
     #lein run -m maqueta.hello.physics
 

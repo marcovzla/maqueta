@@ -1,6 +1,7 @@
 (ns maqueta.assets
-  (:import (com.jme3.system JmeSystem)
-           (com.jme3.material Material)))
+  (:import com.jme3.system.JmeSystem
+           com.jme3.material.Material
+           com.jme3.audio.AudioNode))
 
 (def desktop-cfg (-> (Thread/currentThread)
                      .getContextClassLoader
@@ -8,14 +9,22 @@
 
 (def asset-manager (JmeSystem/newAssetManager desktop-cfg))
 
-(defn load-model [model-name]
-  (.loadModel asset-manager model-name))
+(defn load-model
+  [name]
+  (.loadModel asset-manager name))
 
-(defn load-texture [texture-name]
-  (.loadTexture asset-manager texture-name))
+(defn load-texture
+  [name]
+  (.loadTexture asset-manager name))
 
-(defn load-font [font-name]
-  (.loadFont asset-manager font-name))
+(defn load-font
+  [name]
+  (.loadFont asset-manager name))
 
-(defn load-material [material-name]
-  (Material. asset-manager material-name))
+(defn load-material
+  [name]
+  (Material. asset-manager name))
+
+(defn load-audio
+  [name]
+  (AudioNode. asset-manager name false))
