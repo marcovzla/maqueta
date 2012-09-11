@@ -40,16 +40,9 @@
       (.attachChild audio-nature))
     (.play audio-nature)))
 
-(defn get-cam
-  [app]
-  (-> com.jme3.app.Application
-      (.getDeclaredField "cam")
-      (doto (.setAccessible true))
-      (.get app)))
-
 (defn update
   [app tpf]
-  (let [cam (get-cam app)
+  (let [cam (.getCamera app)
         listener (.getListener app)]
     (doto listener
       (.setLocation (.getLocation cam))
