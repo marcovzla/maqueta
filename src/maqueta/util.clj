@@ -21,4 +21,4 @@
 
 (defn path-join
   [& args]
-  (io/as-relative-path (apply io/file args)))
+  (.toString (apply io/file args)))
