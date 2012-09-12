@@ -8,7 +8,6 @@
            com.jme3.bullet.control.RigidBodyControl
            com.jme3.bullet.collision.shapes.CapsuleCollisionShape
            com.jme3.bullet.util.CollisionShapeFactory
-           com.jme3.asset.plugins.ZipLocator
            com.jme3.light.AmbientLight
            com.jme3.light.DirectionalLight
            com.jme3.scene.Node
@@ -34,9 +33,11 @@
   (let [bullet-app-state (BulletAppState.)
         al (AmbientLight.)
         dl (DirectionalLight.)
-        _ (.registerLocator asset-manager "town.zip" ZipLocator)
-        scene-model (doto (load-model "main.scene") (.setLocalScale (Vector3f. 2 2 2)))
-        scene-shape (CollisionShapeFactory/createMeshShape (cast Node scene-model))
+        _ (register-zip "town.zip")
+        scene-model (doto (load-model "main.scene")
+                      (.setLocalScale (Vector3f. 2 2 2)))
+        scene-shape (CollisionShapeFactory/createMeshShape
+                     (cast Node scene-model))
         landscape (RigidBodyControl. scene-shape 0)]
     (.attach (.getStateManager app) bullet-app-state)
     (.setBackgroundColor (.getViewPort app) (ColorRGBA. 0.7 0.8 1 1))

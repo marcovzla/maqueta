@@ -9,7 +9,7 @@ pom.xml
 .lein-failures
 .lein-plugins
 
-assets
+resources
 downloads
 local-repo
 *.so

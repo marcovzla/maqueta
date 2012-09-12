@@ -1,4 +1,5 @@
-(ns maqueta.util)
+(ns maqueta.util
+  (:require [clojure.java.io :as io]))
 
 (defn no-op
   "Takes any number of arguments and does nothing."
@@ -17,3 +18,7 @@
   (-> (name kword)
       .toUpperCase
       (.replaceAll "-" "_")))
+
+(defn path-join
+  [& args]
+  (io/as-relative-path (apply io/file args)))

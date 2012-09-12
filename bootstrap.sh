@@ -31,9 +31,8 @@ function mvn-deploy {
 DL=$(make-dir 'downloads')
 # local maven repository
 REPO=$(make-dir 'local-repo')
-# project assets directory
-ASSETS=$(make-dir 'assets')
-mkdir "$ASSETS/Scenes"
+# project resources directory
+RES=$(make-dir 'resources')
 
 
 # jMonkeyEngine 3.0
@@ -45,7 +44,7 @@ done
 
 # sample scene
 get-file "http://www.jmonkeyengine.com/nightly/town.zip"
-unzip $FILE -d "$ASSETS/Scenes/town"
+cp $FILE $RES
 
 
 # build jar
