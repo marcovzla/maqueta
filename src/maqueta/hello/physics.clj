@@ -137,7 +137,7 @@
 
 (defn -main
   [& args]
-  (.start (make-app :setup-fn init-app
+  (.start (make-app :init init-app
                     :on-action {:button-left (fn [app is-pressed tpf]
                                                (if (not is-pressed)
                                                  (make-cannon-ball app)))})))

@@ -28,4 +28,4 @@
 
 (defn -main
   [& args]
-  (.start (make-app :setup-fn setup-fn)))
+  (.start (make-app :init setup-fn)))

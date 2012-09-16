@@ -17,4 +17,4 @@
 (defn -main
   [& args]
   (.start (make-app :root-node player
-                    :update-fn #(.rotate player 0 (* 2 %2) 0))))
+                    :update #(.rotate player 0 (* 2 %2) 0))))

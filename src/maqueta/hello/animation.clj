@@ -44,6 +44,6 @@
 
 (defn -main
   [& args]
-  (.start (make-app :setup-fn setup-fn
+  (.start (make-app :init setup-fn
                     :on-action {:key-space walk}
                     :on-anim-cycle-done {"Walk" cycle-done})))

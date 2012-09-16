@@ -52,4 +52,4 @@
 
 (defn -main
   [& args]
-  (.start (make-app :setup-fn init-app)))
+  (.start (make-app :init init-app)))

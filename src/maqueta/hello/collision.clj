@@ -83,6 +83,6 @@
 
 (defn -main
   [& args]
-  (.start (make-app :setup-fn init-app
-                    :update-fn update
+  (.start (make-app :init init-app
+                    :update update
                     :on-action on-action)))

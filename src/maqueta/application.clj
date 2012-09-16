@@ -47,57 +47,55 @@
 (defn get-triggers
   [names]
   (if (seq? names)
-    (map #(get-trigger %) names)
+    (vec (map #(get-trigger %) names))
     [(get-trigger names)]))
 
 (defn initialize-inputs
   [input-manager listener key-map]
-  (doall
-   (map #(let [name (print-str %)]
-           (doto input-manager
-             (.addMapping name (into-array Trigger (get-triggers %)))
-             (.addListener listener (into-array String [name]))))
-        (keys key-map))))
+  (doseq [key (keys key-map)]
+    (let [name (print-str key)]
+      (doto input-manager
+        (.addMapping name (into-array Trigger (get-triggers key)))
+        (.addListener listener (into-array String [name]))))))
 
 (defn make-app
-  [& {:keys [show-settings root-node setup-fn update-fn
+  [& {:keys [show-settings root-node init update
              on-action on-analog on-anim-change on-anim-cycle-done]
       :or {show-settings false
            root-node nil
-           setup-fn no-op
-           update-fn no-op
+           init no-op
+           update no-op
            on-action {}
            on-analog {}
            on-anim-change {}
            on-anim-cycle-done {}}}]
-  (doto
-      (proxy [SimpleApplication
-              ActionListener AnalogListener
-              AnimEventListener] []
-        (simpleInitApp []
-          (if root-node
-            (.attachChild (.getRootNode this) root-node))
-          (doto (.getInputManager this)
-            (initialize-inputs (cast ActionListener this) on-action)
-            (initialize-inputs (cast AnalogListener this) on-analog))
-          (setup-fn this))
-        (simpleUpdate [tpf]
-          (update-fn this tpf))
-        (onAction
-          [name is-pressed tpf]
-          (if-let [callback (on-action (read-string name))]
-            (callback this is-pressed tpf)))
-        (onAnalog
-          [name value tpf]
-          (if-let [callback (on-analog (read-string name))]
-            (callback this value tpf)))
-        (onAnimChange
-          [control channel name]
-          (if-let [callback (on-anim-change name)]
-            (callback this control channel)))
-        (onAnimCycleDone
-          [control channel name]
-          (if-let [callback (on-anim-cycle-done name)]
-            (callback this control channel))))
+  (doto (proxy [SimpleApplication
+                ActionListener AnalogListener
+                AnimEventListener] []
+          (simpleInitApp []
+            (if root-node
+              (.attachChild (.getRootNode this) root-node))
+            (doto (.getInputManager this)
+              (initialize-inputs (cast ActionListener this) on-action)
+              (initialize-inputs (cast AnalogListener this) on-analog))
+            (init this))
+          (simpleUpdate [tpf]
+            (update this tpf))
+          (onAction
+            [name is-pressed tpf]
+            (when-let [callback (on-action (read-string name))]
+              (callback this is-pressed tpf)))
+          (onAnalog
+            [name value tpf]
+            (when-let [callback (on-analog (read-string name))]
+              (callback this value tpf)))
+          (onAnimChange
+            [control channel name]
+            (when-let [callback (on-anim-change name)]
+              (callback this control channel)))
+          (onAnimCycleDone
+            [control channel name]
+            (when-let [callback (on-anim-cycle-done name)]
+              (callback this control channel))))
     (.setShowSettings show-settings)
     (.setSettings *app-settings*)))
