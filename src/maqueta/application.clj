@@ -27,8 +27,8 @@
             (if root-node
               (.attachChild (.getRootNode this) root-node))
             (doto (.getInputManager this)
-              (initialize-inputs (cast ActionListener this) on-action)
-              (initialize-inputs (cast AnalogListener this) on-analog))
+              (register-inputs (cast ActionListener this) on-action)
+              (register-inputs (cast AnalogListener this) on-analog))
             (init this))
           (simpleUpdate [tpf]
             (update this tpf))

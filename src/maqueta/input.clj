@@ -36,7 +36,7 @@
     (vec (map #(get-trigger %) names))
     [(get-trigger names)]))
 
-(defn initialize-inputs
+(defn register-inputs
   [input-manager listener key-map]
   (doseq [key (keys key-map)]
     (let [name (print-str key)]
