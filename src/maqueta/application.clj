@@ -44,15 +44,19 @@
         (catch NoSuchFieldException e
           nil)))))
 
+(defn get-triggers
+  [names]
+  (if (seq? names)
+    (map #(get-trigger %) names)
+    [(get-trigger names)]))
+
 (defn initialize-inputs
   [input-manager listener key-map]
   (doall
-   (map (fn [keyword]
-          (let [name (keyword->name keyword)
-                trigger (get-trigger keyword)]
-            (doto input-manager
-              (.addMapping name (into-array Trigger [trigger]))
-              (.addListener listener (into-array String [name])))))
+   (map #(let [name (print-str %)]
+           (doto input-manager
+             (.addMapping name (into-array Trigger (get-triggers %)))
+             (.addListener listener (into-array String [name]))))
         (keys key-map))))
 
 (defn make-app
@@ -81,11 +85,11 @@
           (update-fn this tpf))
         (onAction
           [name is-pressed tpf]
-          (if-let [callback (on-action (name->keyword name))]
+          (if-let [callback (on-action (read-string name))]
             (callback this is-pressed tpf)))
         (onAnalog
           [name value tpf]
-          (if-let [callback (on-analog (name->keyword name))]
+          (if-let [callback (on-analog (read-string name))]
             (callback this value tpf)))
         (onAnimChange
           [control channel name]

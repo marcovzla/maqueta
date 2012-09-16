@@ -60,4 +60,4 @@
                     :on-action {:key-p toggle-pause}
                     :on-analog {:key-j left
                                 :key-k right
-                                :key-space rotate})))
+                                '(:key-space :button-left) rotate})))

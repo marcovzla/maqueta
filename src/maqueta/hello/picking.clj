@@ -64,7 +64,7 @@
           (.attachChild root-node mark))
         (.detachChild root-node mark)))))
 
-(def on-action {:button-left shoot})
+(def on-action {'(:key-space :button-left) shoot})
 
 (defn init-cross-hairs
   [gui-node]
