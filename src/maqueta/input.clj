@@ -5,9 +5,9 @@
                                     MouseButtonTrigger)))
 
 (defmacro make-trigger
-  [trigger-class input-class keyword]
+  [trigger-class input-class input-name]
   `(new ~trigger-class (-> ~input-class
-                           (.getField (-> (name ~keyword)
+                           (.getField (-> (name ~input-name)
                                           .toUpperCase
                                           (.replaceAll "-" "_")))
                            (.get nil))))
