@@ -2,9 +2,7 @@
   (:import (com.jme3.input KeyInput MouseInput)
            (com.jme3.input.controls Trigger
                                     KeyTrigger
-                                    MouseButtonTrigger
-                                    ActionListener
-                                    AnalogListener)))
+                                    MouseButtonTrigger)))
 
 (defmacro make-trigger
   [trigger-class input-class keyword]
