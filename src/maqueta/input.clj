@@ -1,0 +1,47 @@
+(ns maqueta.input
+  (:import (com.jme3.input KeyInput MouseInput)
+           (com.jme3.input.controls Trigger
+                                    KeyTrigger
+                                    MouseButtonTrigger
+                                    ActionListener
+                                    AnalogListener)))
+
+(defmacro make-trigger
+  [trigger-class input-class keyword]
+  `(new ~trigger-class (-> ~input-class
+                           (.getField (-> (name ~keyword)
+                                          .toUpperCase
+                                          (.replaceAll "-" "_")))
+                           (.get nil))))
+
+(defn key-trigger
+  [name]
+  (make-trigger KeyTrigger KeyInput name))
+
+(defn mouse-trigger
+  [name]
+  (make-trigger MouseButtonTrigger MouseInput name))
+
+(defn get-trigger
+  [name]
+  (try
+    (key-trigger name)
+    (catch NoSuchFieldException e
+      (try
+        (mouse-trigger name)
+        (catch NoSuchFieldException e
+          nil)))))
+
+(defn get-triggers
+  [names]
+  (if (seq? names)
+    (vec (map #(get-trigger %) names))
+    [(get-trigger names)]))
+
+(defn initialize-inputs
+  [input-manager listener key-map]
+  (doseq [key (keys key-map)]
+    (let [name (print-str key)]
+      (doto input-manager
+        (.addMapping name (into-array Trigger (get-triggers key)))
+        (.addListener listener (into-array String [name]))))))

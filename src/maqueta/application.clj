@@ -1,62 +1,13 @@
 (ns maqueta.application
-  (:use maqueta.util)
+  (:use (maqueta util input))
   (:import com.jme3.app.SimpleApplication
            com.jme3.system.AppSettings
-           (com.jme3.input KeyInput MouseInput)
-           (com.jme3.input.controls Trigger
-                                    KeyTrigger
-                                    MouseButtonTrigger
-                                    ActionListener
-                                    AnalogListener)
-           (com.jme3.animation AnimChannel
-                               AnimControl
-                               AnimEventListener
-                               LoopMode)))
+           com.jme3.animation.AnimEventListener
+           (com.jme3.input.controls ActionListener AnalogListener)))
 
 (def ^:dynamic *app-settings* (doto (AppSettings. true)
                                 (.setFullscreen false)
                                 (.setTitle "maqueta")))
-
-(defmacro make-trigger
-  [keyword input-class trigger-class]
-  `(new ~trigger-class
-        ;; get value of input-class's field by name
-        ;; for example, KeyInput/KEY_J => 36
-        (-> ~input-class
-            (.getField (keyword->name ~keyword))
-            (.get nil))))
-
-(defn key-trigger
-  [name]
-  (make-trigger name KeyInput KeyTrigger))
-
-(defn mouse-trigger
-  [name]
-  (make-trigger name MouseInput MouseButtonTrigger))
-
-(defn get-trigger
-  [name]
-  (try
-    (key-trigger name)
-    (catch NoSuchFieldException e
-      (try
-        (mouse-trigger name)
-        (catch NoSuchFieldException e
-          nil)))))
-
-(defn get-triggers
-  [names]
-  (if (seq? names)
-    (vec (map #(get-trigger %) names))
-    [(get-trigger names)]))
-
-(defn initialize-inputs
-  [input-manager listener key-map]
-  (doseq [key (keys key-map)]
-    (let [name (print-str key)]
-      (doto input-manager
-        (.addMapping name (into-array Trigger (get-triggers key)))
-        (.addListener listener (into-array String [name]))))))
 
 (defn make-app
   [& {:keys [show-settings root-node init update
