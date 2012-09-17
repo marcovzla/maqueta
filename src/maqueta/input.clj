@@ -32,9 +32,9 @@
 
 (defn get-triggers
   [names]
-  (if (seq? names)
-    (vec (map #(get-trigger %) names))
-    [(get-trigger names)]))
+  (if (or (keyword? names) (string? names))
+    (list (get-trigger names))
+    (map #(get-trigger %) names)))
 
 (defn register-inputs
   [input-manager listener key-map]
