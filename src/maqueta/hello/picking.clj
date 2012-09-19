@@ -2,7 +2,7 @@
 ;;;; http://jmonkeyengine.org/wiki/doku.php/jme3:beginner:hello_picking
 
 (ns maqueta.hello.picking
-  (:use (maqueta application assets))
+  (:use (maqueta application assets geometry))
   (:import com.jme3.collision.CollisionResults
            com.jme3.font.BitmapText
            (com.jme3.math ColorRGBA Ray Vector3f)
@@ -11,21 +11,13 @@
 
 (defn make-cube
   [name x y z]
-  (let [box (Box. (Vector3f. x y z) 1 1 1)
-        cube (Geometry. name box)
-        mat (load-material "Common/MatDefs/Misc/Unshaded.j3md")]
-    (.setColor mat "Color" (ColorRGBA/randomColor))
-    (.setMaterial cube mat)
-    cube))
+  (make-box name :x 1 :y 1 :z 1 :center (Vector3f. x y z)))
 
 (defn make-floor
   []
-  (let [box (Box. (Vector3f. 0 -4 -5) 15 0.2 15)
-        floor (Geometry. "the Floor" box)
-        mat (load-material "Common/MatDefs/Misc/Unshaded.j3md")]
-    (.setColor mat "Color" ColorRGBA/Gray)
-    (.setMaterial floor mat)
-    floor))
+  (make-box "the Floor" :x 15 :y 0.2 :z 15
+            :center (Vector3f. 0 -4 -5)
+            :color ColorRGBA/Gray))
 
 (def shootables (doto (Node. "Shootables")
                   (.attachChild (make-cube "a Dragon" -2 0 1))
