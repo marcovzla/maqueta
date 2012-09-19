@@ -6,8 +6,7 @@
   (:import com.jme3.collision.CollisionResults
            com.jme3.font.BitmapText
            (com.jme3.math ColorRGBA Ray Vector3f)
-           (com.jme3.scene Node Geometry)
-           (com.jme3.scene.shape Box Sphere)))
+           com.jme3.scene.Node))
 
 (defn make-cube
   [name x y z]
