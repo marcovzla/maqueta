@@ -3,7 +3,8 @@
 
 (ns maqueta.hello.terrain
   (:use (maqueta application assets))
-  (:import com.jme3.terrain.heightmap.ImageBasedHeightMap
+  (:import com.jme3.texture.Texture$WrapMode
+           com.jme3.terrain.heightmap.ImageBasedHeightMap
            (com.jme3.terrain.geomipmap TerrainQuad TerrainLodControl)))
 
 (def patch-size 65)
@@ -19,9 +20,9 @@
         heightmap (doto (ImageBasedHeightMap. (.getImage hmap-img)) .load)
         terrain (TerrainQuad. "my terrain" patch-size 513 (.getHeightMap heightmap))]
     (.setMoveSpeed fly-cam 50)
-    (.setWrap grass com.jme3.texture.Texture$WrapMode/Repeat)
-    (.setWrap dirt com.jme3.texture.Texture$WrapMode/Repeat)
-    (.setWrap rock com.jme3.texture.Texture$WrapMode/Repeat)
+    (.setWrap grass Texture$WrapMode/Repeat)
+    (.setWrap dirt Texture$WrapMode/Repeat)
+    (.setWrap rock Texture$WrapMode/Repeat)
     (doto mat-terrain
       (.setTexture "Alpha" (load-texture "Textures/Terrain/splat/alphamap.png"))
       (.setTexture "Tex1" grass)
