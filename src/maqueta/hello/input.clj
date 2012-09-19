@@ -5,13 +5,6 @@
   (:use (maqueta application geometry))
   (:import com.jme3.math.ColorRGBA))
 
-(defn get-speed
-  [app]
-  (-> com.jme3.app.Application
-      (.getDeclaredField "speed")
-      (doto (.setAccessible true))
-      (.get app)))
-
 (def player (make-box "Player" :x 1 :y 1 :z 1 :color ColorRGBA/Blue))
 
 (def is-running (atom true))

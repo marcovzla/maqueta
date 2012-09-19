@@ -9,6 +9,13 @@
                                 (.setFullscreen false)
                                 (.setTitle "maqueta")))
 
+(defn get-speed
+  [app]
+  (-> com.jme3.app.Application
+      (.getDeclaredField "speed")
+      (doto (.setAccessible true))
+      (.get app)))
+
 (defn make-app
   [& {:keys [show-settings root-node init update
              on-action on-analog on-anim-change on-anim-cycle-done]
