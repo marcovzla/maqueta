@@ -3,9 +3,7 @@
 
 (ns maqueta.hello.input
   (:use (maqueta application geometry))
-  (:import (com.jme3.math ColorRGBA Vector3f)
-           com.jme3.scene.Geometry
-           com.jme3.scene.shape.Box))
+  (:import com.jme3.math.ColorRGBA))
 
 (defn get-speed
   [app]
