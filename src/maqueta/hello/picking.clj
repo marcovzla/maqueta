@@ -26,12 +26,7 @@
                   (.attachChild (make-cube "the Deputy" 1 0 -4))
                   (.attachChild (make-floor))))
 
-(def mark (let [sphere (Sphere. 30 30 0.2)
-                mark (Geometry. "BOOM!" sphere)
-                mat (load-material "Common/MatDefs/Misc/Unshaded.j3md")]
-            (.setColor mat "Color" ColorRGBA/Red)
-            (.setMaterial mark mat)
-            mark))
+(def mark (make-sphere "BOOM!" 30 30 0.2 :color ColorRGBA/Red))
 
 (defn shoot
   [app is-pressed tpf]
