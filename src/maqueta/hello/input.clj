@@ -2,7 +2,7 @@
 ;;;; http://jmonkeyengine.org/wiki/doku.php/jme3:beginner:hello_input_system
 
 (ns maqueta.hello.input
-  (:use (maqueta application assets))
+  (:use (maqueta application geometry))
   (:import (com.jme3.math ColorRGBA Vector3f)
            com.jme3.scene.Geometry
            com.jme3.scene.shape.Box))
@@ -14,12 +14,7 @@
       (doto (.setAccessible true))
       (.get app)))
 
-(def player (let [b (Box. Vector3f/ZERO 1 1 1)
-                  geo (Geometry. "Player" b)
-                  mat (load-material "Common/MatDefs/Misc/Unshaded.j3md")]
-              (.setColor mat "Color" ColorRGBA/Blue)
-              (.setMaterial geo mat)
-              geo))
+(def player (make-box "Player" :x 1 :y 1 :z 1 :color ColorRGBA/Blue))
 
 (def is-running (atom true))
 
@@ -28,31 +23,30 @@
   (if (not key-pressed)
     (reset! is-running (not @is-running))))
 
-(defn rotate
-  [app value tpf]
-  (if @is-running
-    (.rotate player 0 (* value (get-speed app)) 0)
-    (println "Press P to unpause")))
+(defmacro def-pausable
+  [name & body]
+  `(defn ~name
+     [~'app ~'value ~'tpf]
+     (if @is-running
+       (do ~@body)
+       (println "Press P to unpause"))))
 
-(defn right
-  [app value tpf]
-  (if @is-running
-    (let [v (.getLocalTranslation player)]
-      (.setLocalTranslation player
-                            (+ (.getX v) (* value (get-speed app)))
-                            (.getY v)
-                            (.getZ v)))
-    (println "Press P to unpause")))
+(def-pausable rotate
+  (.rotate player 0 (* value (get-speed app)) 0))
 
-(defn left
-  [app value tpf]
-  (if @is-running
-    (let [v (.getLocalTranslation player)]
-      (.setLocalTranslation player
-                            (- (.getX v) (* value (get-speed app)))
-                            (.getY v)
-                            (.getZ v)))
-    (println "Press P to unpause")))
+(def-pausable right
+  (let [v (.getLocalTranslation player)]
+    (.setLocalTranslation player
+                          (+ (.getX v) (* value (get-speed app)))
+                          (.getY v)
+                          (.getZ v))))
+
+(def-pausable left
+  (let [v (.getLocalTranslation player)]
+    (.setLocalTranslation player
+                          (- (.getX v) (* value (get-speed app)))
+                          (.getY v)
+                          (.getZ v))))
 
 (defn -main
   [& args]
@@ -60,4 +54,4 @@
                     :on-action {:key-p toggle-pause}
                     :on-analog {:key-j left
                                 :key-k right
-                                '(:key-space :button-left) rotate})))
+                                [:key-space :button-left] rotate})))
