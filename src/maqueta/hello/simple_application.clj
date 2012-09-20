@@ -7,5 +7,5 @@
 
 (defn -main
   [& args]
-  (.start (make-app :root-node (make-box "Box" :x 1 :y 1 :z 1
+  (.start (make-app :root-node (make-box "Box" 1 1 1
                                          :color ColorRGBA/Blue))))

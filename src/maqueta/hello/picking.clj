@@ -10,11 +10,11 @@
 
 (defn make-cube
   [name x y z]
-  (make-box name :x 1 :y 1 :z 1 :center (Vector3f. x y z)))
+  (make-box name 1 1 1 :center (Vector3f. x y z)))
 
 (defn make-floor
   []
-  (make-box "the Floor" :x 15 :y 0.2 :z 15
+  (make-box "the Floor" 15 0.2 15
             :center (Vector3f. 0 -4 -5)
             :color ColorRGBA/Gray))
 

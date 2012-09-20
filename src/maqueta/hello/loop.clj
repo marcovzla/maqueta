@@ -7,6 +7,6 @@
 
 (defn -main
   [& args]
-  (let [player (make-box "blue cube" :x 1 :y 1 :z 1 :color ColorRGBA/Blue)]
+  (let [player (make-box "blue cube" 1 1 1 :color ColorRGBA/Blue)]
     (.start (make-app :root-node player
                       :update #(.rotate player 0 (* 2 %2) 0)))))

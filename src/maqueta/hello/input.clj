@@ -5,7 +5,7 @@
   (:use (maqueta application geometry))
   (:import com.jme3.math.ColorRGBA))
 
-(def player (make-box "Player" :x 1 :y 1 :z 1 :color ColorRGBA/Blue))
+(def player (make-box "Player" 1 1 1 :color ColorRGBA/Blue))
 
 (def is-running (atom true))
 
