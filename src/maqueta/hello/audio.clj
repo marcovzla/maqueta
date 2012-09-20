@@ -2,17 +2,11 @@
 ;;;; http://jmonkeyengine.org/wiki/doku.php/jme3:beginner:hello_audio
 
 (ns maqueta.hello.audio
-  (:use (maqueta application assets))
+  (:use (maqueta application assets geometry))
   (:import com.jme3.audio.AudioNode
-           com.jme3.scene.Geometry
-           com.jme3.scene.shape.Box
            (com.jme3.math ColorRGBA Vector3f)))
 
-(def player (let [player (Geometry. "Player" (Box. Vector3f/ZERO 1 1 1))
-                  mat (load-material "Common/MatDefs/Misc/Unshaded.j3md")]
-              (.setColor mat "Color" ColorRGBA/Blue)
-              (doto player
-                (.setMaterial mat))))
+(def player (make-box "Player" 1 1 1 :color ColorRGBA/Blue))
 
 (def audio-gun (doto (load-audio "Sound/Effects/Gun.wav")
                  (.setLooping false)
