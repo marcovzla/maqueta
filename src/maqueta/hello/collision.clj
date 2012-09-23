@@ -33,8 +33,7 @@
   (let [bullet-app-state (BulletAppState.)
         al (AmbientLight.)
         dl (DirectionalLight.)
-        _ (register-zip "town.zip")
-        scene-model (doto (load-model "main.scene")
+        scene-model (doto (load-model "Scenes/town/main.scene")
                       (.setLocalScale (Vector3f. 2 2 2)))
         scene-shape (CollisionShapeFactory/createMeshShape
                      (cast Node scene-model))

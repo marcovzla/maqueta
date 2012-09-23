@@ -2,14 +2,15 @@
   (:use maqueta.util)
   (:import com.jme3.system.JmeSystem
            com.jme3.material.Material
-           com.jme3.asset.plugins.ZipLocator
+           (com.jme3.asset.plugins ZipLocator FileLocator)
            com.jme3.audio.AudioNode))
 
 (def desktop-cfg (-> (Thread/currentThread)
                      .getContextClassLoader
                      (.getResource "com/jme3/asset/Desktop.cfg")))
 
-(def asset-manager (JmeSystem/newAssetManager desktop-cfg))
+(def asset-manager (doto (JmeSystem/newAssetManager desktop-cfg)
+                     (.registerLocator "assets" FileLocator)))
 
 (defn register-zip
   [name]
