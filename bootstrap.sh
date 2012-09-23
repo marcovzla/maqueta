@@ -32,7 +32,7 @@ DL=$(make-dir 'downloads')
 # local maven repository
 REPO=$(make-dir 'local-repo')
 # Scenes directory
-SCENES=$(make-dir 'assets/Scenes')
+ASSETS=$(make-dir 'assets')
 
 
 # jMonkeyEngine 3.0
@@ -42,9 +42,13 @@ for jar in $DL/jme3/lib/*.jar; do
     mvn-deploy $jar 3.0
 done
 
+# put test data in assets directory
+# instead of including it in the jar
+unzip $DL/jme3/lib/jME3-testdata.jar -d $ASSETS
+
 # sample scene
 get-file "http://www.jmonkeyengine.com/nightly/town.zip"
-unzip $FILE -d "$SCENES/town"
+unzip $FILE -d "$ASSETS/Scenes/town"
 
 
 # build jar

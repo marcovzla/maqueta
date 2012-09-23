@@ -20,7 +20,7 @@
                  [local-repo/jME3-niftygui "3.0"]
                  [local-repo/jME3-plugins "3.0"]
                  [local-repo/jME3-terrain "3.0"]
-                 [local-repo/jME3-testdata "3.0"]
+                 ;[local-repo/jME3-testdata "3.0"]
                  [local-repo/j-ogg-oggd "3.0"]
                  [local-repo/j-ogg-vorbisd "3.0"]
                  [local-repo/lwjgl "3.0"]
