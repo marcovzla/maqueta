@@ -39,21 +39,17 @@
             (init this))
           (simpleUpdate [tpf]
             (update this tpf))
-          (onAction
-            [name is-pressed tpf]
-            (when-let [callback (on-action (read-string name))]
+          (onAction [name is-pressed tpf]
+            (if-let [callback (on-action (read-string name))]
               (callback this is-pressed tpf)))
-          (onAnalog
-            [name value tpf]
-            (when-let [callback (on-analog (read-string name))]
+          (onAnalog [name value tpf]
+            (if-let [callback (on-analog (read-string name))]
               (callback this value tpf)))
-          (onAnimChange
-            [control channel name]
-            (when-let [callback (on-anim-change name)]
+          (onAnimChange [control channel name]
+            (if-let [callback (on-anim-change name)]
               (callback this control channel)))
-          (onAnimCycleDone
-            [control channel name]
-            (when-let [callback (on-anim-cycle-done name)]
+          (onAnimCycleDone [control channel name]
+            (if-let [callback (on-anim-cycle-done name)]
               (callback this control channel))))
     (.setShowSettings show-settings)
     (.setSettings *app-settings*)))
