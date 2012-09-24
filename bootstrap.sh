@@ -45,6 +45,8 @@ done
 # put test data in assets directory
 # instead of including it in the jar
 unzip $DL/jme3/lib/jME3-testdata.jar -d $ASSETS
+rm -rf "$ASSETS/META-INF"
+rm "$ASSETS/profiling points"
 
 # sample scene
 get-file "http://www.jmonkeyengine.com/nightly/town.zip"
