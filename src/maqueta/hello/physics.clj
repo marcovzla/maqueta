@@ -3,10 +3,9 @@
 
 (ns maqueta.hello.physics
   (:use (maqueta application assets))
-  (:import com.jme3.scene.shape.Sphere
-           com.jme3.scene.shape.Box
-           com.jme3.math.Vector3f
-           com.jme3.math.Vector2f
+  (:import (com.jme3.scene.shape Box Sphere Sphere$TextureMode)
+           (com.jme3.math Vector2f Vector3f)
+           com.jme3.texture.Texture$WrapMode
            com.jme3.asset.TextureKey
            com.jme3.bullet.BulletAppState
            com.jme3.bullet.control.RigidBodyControl
@@ -18,7 +17,7 @@
 (def brick-height 0.12)
 
 (def sphere (doto (Sphere. 32 32 0.4 true false)
-              (.setTextureMode com.jme3.scene.shape.Sphere$TextureMode/Projected)))
+              (.setTextureMode Sphere$TextureMode/Projected)))
 
 (def box (doto (Box. Vector3f/ZERO brick-length brick-height brick-width)
            (.scaleTextureCoordinates (Vector2f. 1 0.5))))
@@ -41,7 +40,7 @@
 (def floor-mat (let [mat (load-material "Common/MatDefs/Misc/Unshaded.j3md")
                      key (TextureKey. "Textures/Terrain/Pond/Pond.jpg")
                      tex (load-texture (doto key (.setGenerateMips true)))]
-                 (.setWrap tex com.jme3.texture.Texture$WrapMode/Repeat)
+                 (.setWrap tex Texture$WrapMode/Repeat)
                  (doto mat
                    (.setTexture "ColorMap" tex))))
 
