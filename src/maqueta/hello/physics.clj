@@ -127,9 +127,10 @@
     (doto cam
       (.setLocation (Vector3f. 0 4 6))
       (.lookAt (Vector3f. 2 2 0) Vector3f/UNIT_Y))
-    (init-wall app)
-    (init-floor app)
-    (init-cross-hairs app)))
+    (doto app
+      (init-wall)
+      (init-floor)
+      (init-cross-hairs))))
 
 (defn -main
   [& args]
