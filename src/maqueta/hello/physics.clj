@@ -60,7 +60,7 @@
         (.add floor-phy))))
 
 (defn make-brick
-  [loc app]
+  [app loc]
   (let [brick-geo (Geometry. "brick" box)
         brick-phy (RigidBodyControl. (float 2))]
     (doto brick-geo
@@ -73,18 +73,17 @@
         (.add brick-phy))))
 
 (defn make-brick-rows
-  [j startpt height app]
+  [app j startpt height]
   (when (> j 0)
     (doseq [i (range 6)]
-      (make-brick (Vector3f. (+ startpt (* i brick-length 2))
-                             (+ brick-height height)
-                             0)
-                  app))
-    (make-brick-rows (- j 1) (- startpt) (+ height (* brick-height 2)) app)))
+      (make-brick app (Vector3f. (+ startpt (* i brick-length 2))
+                                 (+ brick-height height)
+                                 0)))
+    (make-brick-rows app (- j 1) (- startpt) (+ height (* brick-height 2)))))
 
 (defn init-wall
   [app]
-  (make-brick-rows 15 (/ brick-length 4) 0 app))
+  (make-brick-rows app 15 (/ brick-length 4) 0))
 
 (defn make-cannon-ball
   [app]
@@ -104,8 +103,9 @@
                                      (.mult (float 25))))))
 
 (defn init-cross-hairs
-  [gui-node]
-  (let [font (load-font "Interface/Fonts/Default.fnt")
+  [app]
+  (let [gui-node (.getGuiNode app)
+        font (load-font "Interface/Fonts/Default.fnt")
         ch (BitmapText. font false)]
     (.detachAllChildren gui-node)
     (doto ch
@@ -130,7 +130,7 @@
       (.lookAt (Vector3f. 2 2 0) Vector3f/UNIT_Y))
     (init-wall app)
     (init-floor app)
-    (init-cross-hairs (.getGuiNode app))))
+    (init-cross-hairs app)))
 
 (defn -main
   [& args]
