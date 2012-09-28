@@ -74,15 +74,13 @@
 
 (defn make-brick-rows
   [j startpt height app]
-  (if (> j 0)
-    (do
-      (doall (map (fn [i]
-                    (make-brick (Vector3f. (+ startpt (* i brick-length 2))
-                                           (+ brick-height height)
-                                           0)
-                                app))
-                  (range 6)))
-      (make-brick-rows (- j 1) (- startpt) (+ height (* brick-height 2)) app))))
+  (when (> j 0)
+    (doseq [i (range 6)]
+      (make-brick (Vector3f. (+ startpt (* i brick-length 2))
+                             (+ brick-height height)
+                             0)
+                  app))
+    (make-brick-rows (- j 1) (- startpt) (+ height (* brick-height 2)) app)))
 
 (defn init-wall
   [app]
