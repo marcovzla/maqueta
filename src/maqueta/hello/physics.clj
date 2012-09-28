@@ -106,15 +106,14 @@
   [app]
   (let [gui-node (.getGuiNode app)
         font (load-font "Interface/Fonts/Default.fnt")
-        ch (BitmapText. font false)]
+        ch (BitmapText. font false)
+        size (* 2 (.getRenderedSize (.getCharSet font)))]
     (.detachAllChildren gui-node)
     (doto ch
-      (.setSize (* 2 (.getRenderedSize (.getCharSet font))))
+      (.setSize size)
       (.setText "+")
       (.setLocalTranslation (- (/ (.getWidth *app-settings*) 2)
-                               (* 2
-                                  (/ (.getRenderedSize (.getCharSet font))
-                                     3)))
+                               (/ size 3))
                             (+ (/ (.getHeight *app-settings*) 2)
                                (/ (.getLineHeight ch) 2))
                             0))
