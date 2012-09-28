@@ -43,3 +43,13 @@
       (doto input-manager
         (.addMapping name (into-array Trigger (get-triggers key)))
         (.addListener listener (into-array String [name]))))))
+
+(defmacro make-handler
+  [& body]
+  `(fn [~'app ~'value ~'tpf]
+     (let [~'is-pressed ~'value]
+       ~@body)))
+
+(defmacro def-handler
+  [name & body]
+  `(def ~name (make-handler ~@body)))
