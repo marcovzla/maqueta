@@ -18,11 +18,14 @@
 
 (defn make-app
   [& {:keys [show-settings root-node init update
+             display-fps display-stat-view
              on-action on-analog on-anim-change on-anim-cycle-done]
       :or {show-settings false
            root-node nil
            init no-op
            update no-op
+           display-fps true
+           display-stat-view true
            on-action {}
            on-analog {}
            on-anim-change {}
@@ -51,5 +54,7 @@
           (onAnimCycleDone [control channel name]
             (if-let [callback (on-anim-cycle-done name)]
               (callback this control channel))))
+    (.setSettings *app-settings*)
     (.setShowSettings show-settings)
-    (.setSettings *app-settings*)))
+    (.setDisplayFps display-fps)
+    (.setDisplayStatView display-stat-view)))
