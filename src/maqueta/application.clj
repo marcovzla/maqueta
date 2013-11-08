@@ -6,8 +6,10 @@
            (com.jme3.input.controls ActionListener AnalogListener)))
 
 (def ^:dynamic *app-settings* (doto (AppSettings. true)
+                                (.setTitle "maqueta")
                                 (.setFullscreen false)
-                                (.setTitle "maqueta")))
+                                (.setWidth 800)
+                                (.setHeight 600)))
 
 (defn get-speed
   [app]

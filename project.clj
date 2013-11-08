@@ -4,6 +4,7 @@
   :license {:name "MIT License"
             :url "https://raw.github.com/marcovzla/maqueta/master/LICENSE"}
   :dependencies [[org.clojure/clojure "1.4.0"]
+                 [org.clojure/data.json "0.2.0"]
                  ;; jMonkeyEngine 3.0
                  [local-repo/eventbus "3.0"]
                  [local-repo/jbullet "3.0"]
